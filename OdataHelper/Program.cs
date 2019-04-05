@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Xml;
 
 namespace ConsoleApplication1
@@ -17,11 +18,11 @@ namespace ConsoleApplication1
 
 		private static void Menu()
 		{
-			Console.WriteLine("-If you want to show elements from service write 1\n" +
+			Console.WriteLine("\n-If you want to show elements from service write 1\n" +
 			                  "-If you want to sort data alphabetically write 2\n" +
 			                  "-If you want to sort data from shortest to longest write 3\n" +
 			                  "-If you want to filter data that was longer than your number write 4\n" +
-			                  "-If you want to filter data that contains given letter write 5");
+			                  "-If you want to filter data that contains given letter write 5\n");
 
 			int n = int.Parse(Console.ReadLine());
 			switch (n)
@@ -32,7 +33,7 @@ namespace ConsoleApplication1
 						Console.WriteLine(VARIABLE);
 					}
 
-					break;
+					goto default;
 				case 2:
 					listOfData.Sort();
 					foreach (var VARIABLE in listOfData)
@@ -40,7 +41,8 @@ namespace ConsoleApplication1
 						Console.WriteLine(VARIABLE);
 					}
 
-					break;
+					goto default;
+
 				case 3:
 					var lenghts = from element in listOfData orderby element.Length select element;
 					foreach (var VARIABLE in lenghts)
@@ -48,7 +50,7 @@ namespace ConsoleApplication1
 						Console.WriteLine(VARIABLE);
 					}
 
-					break;
+					goto default;
 				case 4:
 					Console.WriteLine($"How long can be words? Write number. (min. 8)");
 					n = int.Parse(Console.ReadLine());
@@ -58,7 +60,7 @@ namespace ConsoleApplication1
 						Console.WriteLine(VARIABLE);
 					}
 
-					break;
+					goto default;
 				case 5:
 					Console.WriteLine(
 						$"Words with which letter do you want to see? Remember that the size of letters is important.");
@@ -69,10 +71,13 @@ namespace ConsoleApplication1
 						Console.WriteLine(VARIABLE);
 					}
 
-					break;
+					goto default;
 				default:
+					
+					Menu();
 					break;
 			}
+			Thread.Sleep(1000*5);
 		}
 
 		private const string URL = "https://services.odata.org/V3/(S(ej2oh1jixzvj3baomotuaaaw))/OData/OData.svc/";
